@@ -1,11 +1,9 @@
 import { useLoaderData, useNavigation } from "react-router";
 
 function Todos() {
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  
   const todos = useLoaderData();
 
-  // Check if navigation is in progress
 
   return (
     <div>
