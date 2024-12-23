@@ -26,12 +26,14 @@ export const router = createBrowserRouter([
       {
         path: "/todos",
         loader: async () => {
-          const response = await fetch(`${TODO_API}/todos`);
-          if (!response.ok) {
+          try {
+            const response = await fetch(`${TODO_API}/todos`);
+            const data = await response.json();
+            return data.todos;
+          } catch (e) {
+            console.log(e);
             return [];
           }
-          const data = await response.json();
-          return data.todos;
         },
         element: <Todos />,
       },
