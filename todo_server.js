@@ -64,7 +64,7 @@ const seedTodos = () => {
 
 
 
-const handleHomeRoute = (req, res) => {
+const handleHomeRoute = (_req, res) => {
   const todoLinks = todos.map(todo => `<li><a href="/todo?id=${todo.id}">${todo.title}</a></li>`).join('');
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(`
@@ -72,15 +72,19 @@ const handleHomeRoute = (req, res) => {
     <h2>Endpoints</h2>
     <ul>
       <li><a href="/">/</a> - Home page</li>
+      <br/>
+      <li><a href="/todos">/todos</a> - Get all todos</li>
+      <br/>
       <li><a href="/todo?id=1">/todo?id=NUMBER</a> - Get a specific todo</li>
-      <li><a href="/todos_info">/todos_info</a> - Get all todos</li>
+      <br/>
+      <li><a href="/todos_info">/todos_info</a> - Get all todos ids and titles</li>
     </ul>
     <h2>Click on a todo to see details</h2>
     <ol>${todoLinks}</ol>
   `);
 };
 
-const handleTodoRoute = (req, res, query) => {
+const handleTodoRoute = (_req, res, query) => {
   const id = parseInt(query.id);
   if (isNaN(id) || id < 1 || id > todos.length) {
     res.writeHead(400);
@@ -92,14 +96,14 @@ const handleTodoRoute = (req, res, query) => {
   res.end(JSON.stringify({ title: todo.title, description: todo.description }));
 };
 
-const handleTodosInfoRoute = (req, res) => {
+const handleTodosInfoRoute = (_req, res) => {
   const todoDetails = todos.map(({ id, title }) => ({ id, title }));
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(todoDetails));
 };
 
 const handleOptionsRequest = (res) => {
-  res.writeHead(204); 
+  res.writeHead(204);
   res.end();
 };
 
