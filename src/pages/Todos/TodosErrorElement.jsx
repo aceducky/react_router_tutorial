@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, useRouteError } from "react-router";
 
-export function TodosErrorBoundary() {
-  let error = useRouteError();
+export function TodosErrorElement() {
+  const error = useRouteError();
   return isRouteErrorResponse(error) ? (
     <h1>
       {error.status} {error.statusText}

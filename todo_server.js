@@ -87,7 +87,7 @@ const handleHomeRoute = (_req, res) => {
 
 async function handleTodosRoute(_req, res) {
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(todos));
+  res.end(JSON.stringify({ todos }));
 }
 
 async function handleTodoIdRoute(_req, res, query) {

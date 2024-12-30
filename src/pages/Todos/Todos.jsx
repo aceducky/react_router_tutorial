@@ -4,8 +4,8 @@ export function Todos() {
   const todos_info = useLoaderData();
 
   return (
-    <div className="grid grid-cols-[min(200px,25%)_1fr] min-h-screen">
-      <nav className="border-r border-white/90 grid overflow-y-scroll max-h-screen pr-4 divide-y-2">
+    <div className="grid grid-cols-[min(200px,25%)_1fr] min-h-screen ">
+      <nav className="border-r border-white/90 grid overflow-y-scroll overscroll-y-none max-h-screen pr-4 divide-y-2">
         {todos_info.length === 0 ? (
           <div>No Todos Found</div>
         ) : (
