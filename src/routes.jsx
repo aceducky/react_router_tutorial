@@ -7,9 +7,10 @@ import ErrorPage from "./pages/ErrorPage";
 import { createBrowserRouter } from "react-router";
 import { Todos } from "./pages/Todos/Todos";
 import { TODO_API } from "./API_STORE";
-import { TodosErrorBoundary } from "./pages/Todos/TodosErrorBoundary";
+import { TodosErrorElement } from "./pages/Todos/TodosErrorElement.jsx";
 import TodoDetail from "./pages/Todos/TodoDetail.jsx";
 import LoadingCupGif from "./components/LoadingCup";
+import MyComponent from "./pages/MyComponent.jsx";
 
 export const router = createBrowserRouter([
   // These routes are also used in Navbar.jsx for routing
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
         },
         element: <Todos />,
         HydrateFallback: LoadingCupGif,
-        errorElement: <TodosErrorBoundary />,
+        errorElement: <TodosErrorElement />,
         children: [
           {
             path: ":id",
@@ -51,6 +52,20 @@ export const router = createBrowserRouter([
             element: <TodoDetail />,
           },
         ],
+      },
+      {
+        path: "/supense_await",
+        loader: async () => {
+          let nonCriticalData = new Promise((res) =>
+            setTimeout(() => res("non-critical"), 2000)
+          );
+          let criticalData = await new Promise((res) =>
+            setTimeout(() => res("critical"), 300)
+          );
+
+          return { nonCriticalData, criticalData };
+        },
+        element: <MyComponent />,
       },
       {
         path: "/about",

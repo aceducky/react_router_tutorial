@@ -21,7 +21,7 @@ function Navbar() {
            }`
           }
         >
-          {route.path === "/" ? "Home" : route.path.slice(1).toUpperCase()}
+          {route.path === "/" ? "HOME" : route.path.slice(1).toUpperCase()}
         </NavLink>
       ))}
     </nav>

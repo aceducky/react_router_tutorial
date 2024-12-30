@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router";
 
 function TodoDetail() {
   const todo = useLoaderData();
-  console.log(todo)
   return (
     <div>
       <h1 className="text-3xl">{todo.title}</h1>
