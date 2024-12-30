@@ -5,7 +5,7 @@ export function Todos() {
 
   return (
     <div className="grid grid-cols-[min(200px,25%)_1fr] min-h-screen">
-      <nav className="border-r grid space-y-1">
+      <nav className="border-r border-white/90 grid overflow-y-scroll max-h-screen pr-4 divide-y-2">
         {todos_info.length === 0 ? (
           <div>No Todos Found</div>
         ) : (
@@ -14,7 +14,7 @@ export function Todos() {
               key={todo.id}
               to={`/todos/${todo.id}`}
               className={({ isActive }) =>
-                `w-full ${
+                `w-full py-5 ${
                   isActive ? "text-cyan-500 font-bold" : "hover:font-semibold"
                 }`
               }
@@ -24,7 +24,7 @@ export function Todos() {
           ))
         )}
       </nav>
-      <main className="p-4">
+      <main className="px-4 overflow-y-auto">
         <Outlet />
       </main>
     </div>

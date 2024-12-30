@@ -2,11 +2,11 @@ import { createServer } from 'http';
 import { parse } from 'url';
 
 class Todo {
-  constructor(id, title, description, completed) {
+  constructor(id, title, description, isCompleted) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.completed = completed;
+    this.isCompleted = isCompleted;
   }
 }
 
@@ -62,7 +62,8 @@ const seedTodos = () => {
   }
 };
 
-
+const delay = async (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const slowDown = 2000
 
 const handleHomeRoute = (_req, res) => {
   const todoLinks = todos.map(todo => `<li><a href="/todo?id=${todo.id}">${todo.title}</a></li>`).join('');
@@ -84,7 +85,13 @@ const handleHomeRoute = (_req, res) => {
   `);
 };
 
-const handleTodoRoute = (_req, res, query) => {
+async function handleTodosRoute(_req, res) {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(todos));
+}
+
+async function handleTodoIdRoute(_req, res, query) {
+  await delay(slowDown);
   const id = parseInt(query.id);
   if (isNaN(id) || id < 1 || id > todos.length) {
     res.writeHead(400);
@@ -93,21 +100,26 @@ const handleTodoRoute = (_req, res, query) => {
   }
   const todo = todos[id - 1];
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ title: todo.title, description: todo.description }));
-};
+  res.end(JSON.stringify({
+    title: todo.title, description: todo.description, isCompleted
+      : todo.isCompleted
+  }));
+}
 
-const handleTodosInfoRoute = (_req, res) => {
+async function handleTodosInfoRoute(_req, res) {
+  await delay(slowDown);
   const todoDetails = todos.map(({ id, title }) => ({ id, title }));
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(todoDetails));
-};
+}
 
 const handleOptionsRequest = (res) => {
   res.writeHead(204);
   res.end();
 };
 
-const handleNotFound = (res) => {
+async function handleNotFound(res) {
+  await delay(slowDown)
   res.writeHead(404);
   res.end("Not Found");
 };
@@ -127,8 +139,11 @@ const server = createServer((req, res) => {
 
   if (parsedUrl.pathname === "/") {
     handleHomeRoute(req, res);
-  } else if (parsedUrl.pathname === "/todo") {
-    handleTodoRoute(req, res, parsedUrl.query);
+  } else if (parsedUrl.pathname === "/todos") {
+    handleTodosRoute(req, res);
+  }
+  else if (parsedUrl.pathname === "/todo") {
+    handleTodoIdRoute(req, res, parsedUrl.query);
   } else if (parsedUrl.pathname === "/todos_info") {
     handleTodosInfoRoute(req, res);
   } else {
