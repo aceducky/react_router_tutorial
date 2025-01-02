@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  :root {
+    /* --loading-start-color: rgba(249, 250, 252, 0.2);
+    --loading-middle-color: rgb(59, 130, 246);
+    --loading-end-color: rgba(249, 250, 252, 0.2); */
+    --loading-start-color: rgba(255, 255, 255, 1);
+    --loading-middle-color: rgba(93, 125, 175,0.2);
+    --loading-end-color: rgba(255, 255, 255, 1);
+  }
+
+  @keyframes loading {
+    0% {
+      transform: translateX(-10%) scaleX(0);
+    }
+    50% {
+      transform: translateX(0) scaleX(1);
+    }
+    100% {
+      transform: translateX(100%) scaleX(0);
+    }
+  }
+
+  .below-loading-bar::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      var(--loading-start-color),
+      var(--loading-middle-color),
+      var(--loading-end-color)
+    );
+    transform-origin: left;
+    animation: loading 1.5s ease-in infinite;
+  }
+}

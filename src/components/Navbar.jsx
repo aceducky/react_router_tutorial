@@ -12,13 +12,10 @@ function Navbar() {
         <NavLink
           key={route.path}
           to={route.path}
-          className={({ isActive }) =>
-            `p-4 flex items-center justify-center h-full min-w-20
-           ${
-             isActive
-               ? "text-cyan-500 font-bold"
-               : "hover:font-semibold"
-           }`
+          className={({ isActive, isPending }) =>
+            `p-4 grid align-middle justify-evenly h-full min-w-20 ${
+              isActive ? "text-cyan-500 font-bold" : "hover:font-semibold"
+            } ${isPending && "below-loading-bar"}`
           }
         >
           {route.path === "/" ? "HOME" : route.path.slice(1).toUpperCase()}
